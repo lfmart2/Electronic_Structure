@@ -1,0 +1,7 @@
+&DOS
+  prefix='aiida',
+  outdir='./out/',
+  fildos='NbP_dos.dat',
+  emin=8.0,
+  emax=18.0
+/
