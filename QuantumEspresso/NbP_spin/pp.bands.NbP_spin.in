@@ -1,0 +1,5 @@
+&BANDS
+  prefix = 'NbP'
+  outdir = './out/'
+  filband = 'NbP_bands.dat'
+/

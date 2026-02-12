@@ -1,0 +1,45 @@
+&CONTROL
+  calculation = 'nscf'
+  restart_mode = "from_scratch"
+  etot_conv_thr =   4.0000000000d-05
+  forc_conv_thr =   1.0000000000d-04
+  outdir = './out/'
+  prefix = 'NbP_spin'
+  pseudo_dir = './pseudo/'
+  tprnfor = .true.
+  tstress = .true.
+  verbosity = 'high'
+/
+&SYSTEM
+  degauss =   7.3498618000d-03
+  ecutrho =   3.2000000000d+02
+  ecutwfc =   4.0000000000d+01
+  ibrav = 0
+  nat = 4
+  nosym = .false.
+  nspin = 2
+  ntyp = 2
+  occupations = 'smearing'
+  smearing = 'gaussian'
+  starting_magnetization(1) =   3.8461538462d-01
+  starting_magnetization(2) =   1.0000000000d-01
+/
+&ELECTRONS
+  conv_thr =   8.0000000000d-10
+  electron_maxstep = 80
+  mixing_beta =   4.0000000000d-01
+/
+ATOMIC_SPECIES
+Nb     92.90638 Nb.pbesol-spn-kjpaw_psl.0.3.0.UPF
+P      30.973761 P.pbesol-n-rrkjus_psl.1.0.0.UPF
+ATOMIC_POSITIONS crystal
+Nb           0.7499230000       0.7499230000       0.4998460000 
+Nb           0.4999230000       0.9999230000       0.9998460000 
+P            0.1674470000       0.1674470000       0.3348940000 
+P            0.9174470000       0.4174470000       0.8348940000 
+K_POINTS automatic
+40 40 30 0 0 0
+CELL_PARAMETERS angstrom
+      3.2307761845      -0.0000000000       0.9098138742
+      0.2562112755      -3.2206009589      -0.9098138742
+     -0.2562112755       3.2206009589      -5.2813843258

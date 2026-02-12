@@ -1,0 +1,5 @@
+&PROJWFC
+  prefix= 'NbP_spin',
+  outdir= './out/',
+  filpdos= 'NbP_pdos.dat'
+/
