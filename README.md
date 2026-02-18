@@ -1,96 +1,82 @@
-# Electronic Structure Workflows for Topological Materials
+# Electronic Structure Portfolio: DFT Workflows for Topological Materials
 
-A curated collection of **first-principles simulation inputs and outputs** for electronic-structure studies, focused on topological materials.
+> A recruiter-friendly portfolio of **first-principles simulation workflows** using **Quantum ESPRESSO** and **VASP**.
 
-This repository is designed to showcase practical computational workflows used in research and engineering contexts:
-
-- SCF/NSCF ground-state calculations
-- Band structure analysis
-- DOS/PDOS post-processing
-- Spin-polarized and SOC/non-SOC setups
-- Surface/supercell-oriented studies
+This repository is structured to demonstrate practical, end-to-end computational materials science work: from simulation setup, to execution stages, to post-processing-ready artifacts.
 
 ---
 
-## Why this repository is useful
+## What this repository demonstrates
 
-For recruiters, collaborators, and research teams, this repository demonstrates:
-
-- Ability to prepare reproducible DFT workflows
-- Familiarity with multiple codes (**Quantum ESPRESSO** and **VASP**)
-- Understanding of post-processing pipelines for physically meaningful outputs
-- Organized, project-based simulation data management
+- Multi-code experience: **Quantum ESPRESSO + VASP**
+- Workflow literacy: **Relaxation → SCF/NSCF → Bands/DOS/PDOS → Wannier90/TB preparation**
+- Physics-focused modeling choices: **SOC vs non-SOC**, **spin-polarized vs non-spin**, **adsorbate coverage variants**
+- Reproducible project organization for HPC-based research
 
 ---
 
-## Repository structure
+## Repository layout (organized for review)
 
 ```text
 Electronic_Structure/
-├── README.md
+├── README.md                       # portfolio-level overview (this file)
 ├── QuantumEspresso/
-│   ├── README.md
-│   ├── *.in                 # SCF/NSCF/BANDS/PDOS input files
-│   ├── *.out                # output logs
-│   ├── NbP_nspin/           # non-spin/SOC workflow example
-│   └── NbP_spin/            # spin-polarized workflow example
+│   ├── README.md                   # QE workflow guide
+│   ├── NbP_scf.in, NbP_nscf.in     # top-level example inputs
+│   ├── NbP_bands.in, pp.*.in       # post-processing examples
+│   ├── NbP_nspin/                  # non-spin baseline workflow
+│   └── NbP_spin/                   # spin-polarized workflow
 └── VASP/
-    └── README.md
+    ├── README.md                   # VASP workflow map + case descriptions
+    ├── nSOC_nH_S117/               # non-SOC, no-H configuration
+    ├── nSOC_H_S117/                # non-SOC, H-adsorbed configuration
+    ├── SOC_nH_S117/                # SOC, no-H configuration
+    └── SOC_H_S117/                 # SOC, H-adsorbed configuration
 ```
 
 ---
 
-## Included workflows
+## Quick start (for reviewers)
 
-### 1) Quantum ESPRESSO
-Examples include input decks and outputs for NbP-related calculations:
+If you are reviewing this repository for internships, graduate roles, or research positions:
 
-- `scf`, `nscf`, and `bands` workflows
-- spin-polarized and non-spin variants
-- pseudopotential usage and post-processing inputs (`pp.bands`, `pp.dos`, `pp.pdos`)
-
-See details in [`QuantumEspresso/README.md`](QuantumEspresso/README.md).
-
-### 2) VASP
-The VASP section contains examples relevant to topological materials and slab/surface-style calculations.
-
-See details in [`VASP/README.md`](VASP/README.md).
+1. Open [`VASP/README.md`](VASP/README.md) to see complete workflow variants and folder naming conventions.
+2. Open [`QuantumEspresso/README.md`](QuantumEspresso/README.md) for a compact NbP-focused QE pipeline.
+3. Inspect representative stage folders (`Relaxation`, `SCF`, `Bandstructure`, `Wannier90`, `V2W`, `ZPE`) for production-style inputs.
 
 ---
 
-## Recommended usage
+## Workflow coverage
 
-1. Choose a workflow folder (`QuantumEspresso/` or `VASP/`).
-2. Inspect the local `README.md` and input files.
-3. Adjust:
-   - lattice/atomic structure
-   - pseudopotentials or POTCAR setup
-   - k-point mesh and cutoffs
-   - spin/SOC flags based on target physics
-4. Run on your local cluster/HPC system.
-
----
-
-## Interview-friendly highlights
-
-If you are using this repository as part of your portfolio, point reviewers to:
-
-- Multi-code computational skillset (QE + VASP)
-- End-to-end workflow thinking (inputs → outputs → plots)
-- Domain focus in topological materials
-- Reusable file templates for future projects
+| Area | Examples in repository |
+|---|---|
+| Ground-state setup | SCF/NSCF inputs, INCAR/KPOINTS/POSCAR stacks |
+| Band calculations | QE bands flow, VASP bandstructure stage folders |
+| DOS/PDOS | QE `pp.dos` / `pp.pdos` input-output traces |
+| SOC/Spin analysis | SOC and non-SOC + spin/non-spin configurations |
+| Model building | Wannier90 preparation and VASP-to-Wannier flow |
 
 ---
 
-## Future improvements (roadmap)
+## Portfolio talking points (for interviews)
 
-- Add standardized folder templates for each new material
-- Include convergence-test examples (`ecut`, `k-grid`, slab thickness)
-- Provide sample plotting scripts (bands/DOS/PDOS)
-- Add environment/setup notes for reproducibility
+- I can set up and compare **multiple spin/SOC regimes** for the same material system.
+- I maintain **stage-separated workflows** that make reruns and debugging easier.
+- I preserve input/output artifacts to support **traceability and reproducibility**.
+- I can bridge DFT outputs toward **model Hamiltonian workflows** (Wannier90/TB).
+
+---
+
+## Suggested next enhancements
+
+To make this portfolio even stronger for hiring managers:
+
+- Add one figure-based case study (band structure + short interpretation)
+- Add a reproducibility note per case (code version, pseudopotentials, cutoff/k-grid convergence)
+- Add lightweight scripts to parse and plot selected outputs automatically
 
 ---
 
 ## Contact
 
-If you are a recruiter or collaborator interested in this work, feel free to connect through my GitHub profile.
+If you are a recruiter, collaborator, or research group interested in this work, feel free to connect via my GitHub profile.
