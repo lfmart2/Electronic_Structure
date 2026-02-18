@@ -1,29 +1,30 @@
-# Quantum ESPRESSO Workflows
+# Quantum ESPRESSO Workflow Collection
 
-This folder contains Quantum ESPRESSO examples for topological-material studies (NbP-focused), including both spin and non-spin workflows.
+This folder contains Quantum ESPRESSO examples centered on NbP workflows for electronic-structure analysis in topological-material contexts.
 
-## Contents
+## What is included
 
-- SCF/NSCF setup files
-- Band-structure inputs and generated data
-- DOS/PDOS post-processing inputs/outputs
-- Pseudopotential files used in sample runs
+- SCF and NSCF input files
+- Band-structure setup and generated data files
+- DOS/PDOS post-processing inputs and outputs
+- Example pseudopotential files used in these runs
 
-## Notable subfolders
+## Subfolders
 
-- `NbP_spin/`:
-  Spin-polarized example workflow with SCF, NSCF, bands, and PDOS processing.
 - `NbP_nspin/`:
-  Non-spin counterpart for comparison and baseline checks.
+  non-spin baseline workflow useful for comparison and validation
+- `NbP_spin/`:
+  spin-polarized workflow including SCF, NSCF, bands, and PDOS artifacts
 
-## Typical run sequence
+## Typical execution order
 
 1. `scf` calculation
 2. `nscf` calculation
-3. `bands` (or DOS/PDOS) post-processing
-4. plotting/analysis (`*.gnuplot`, `*.dat`, `*.ps`)
+3. `bands` or DOS/PDOS post-processing (`pp.bands`, `pp.dos`, `pp.pdos`)
+4. plotting/analysis from generated `*.dat`, `*.gnuplot`, `*.ps`
 
-## Notes
+## Reuse notes
 
-- Input parameters are examples and should be converged for each new material.
-- Update pseudopotentials and cutoffs as required by your target system.
+- Treat these inputs as templates and re-converge for any new material.
+- Update pseudopotentials, cutoff energies, and k-point meshes per target system.
+- Keep output logs with each stage to preserve reproducibility for publication/interview review.
