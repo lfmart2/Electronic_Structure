@@ -1,0 +1,36 @@
+###############################################################################
+#  NbP slab – stable SOC SCF                                                  #
+###############################################################################
+# 1. restart flags
+ISTART    = 0              # ignore WAVECAR (safer if ENCUT/KPOINTS changed)
+ICHARG    = 2              # atomic charge guess
+
+# 2. basis & symmetry
+ENCUT     = 400
+# NBANDS    = 730            # 504 target + 224 excluded + ~10 % buffer
+ISYM      = 0
+LSORBIT   = .TRUE.
+LNONCOLLINEAR = .TRUE.
+SAXIS     = 0 0 1
+LMAXMIX   = 4
+LREAL     = Auto
+PREC      = Accurate
+ADDGRID   = .TRUE.
+LPLANE    = .TRUE.
+LASPH     = .TRUE.         # improves SOC stability
+
+# 3. robust mixer
+ALGO      = Normal
+AMIX      = 0.10
+BMIX      = 0.00005
+AMIN      = 0.005           # suppress sloshing along long c axis
+NELM      = 200
+EDIFF     = 1E-7
+
+# 5. output
+LWAVE     = .TRUE.         # keep for NSCF/Wannier
+LCHARG    = .TRUE.
+LORBIT    = 0              # turn on later only if you need PROCAR
+NWRITE    = 0
+NCORE     = 28
+NSIM      = 8

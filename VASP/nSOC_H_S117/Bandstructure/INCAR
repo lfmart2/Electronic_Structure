@@ -1,0 +1,49 @@
+###############################################################################
+#                   NbP slab: NSCF VASP -> Wannier90                          #
+###############################################################################
+System    = NbP Weyl Semimetal with SOC  # Description of the system
+# --- Restart flags -----------------------------------------------------------
+ISTART    = 1            # read WAVECAR  (wave-functions)
+ICHARG    = 11           # read CHGCAR   (charge density)
+
+# --- Symmetry & basis --------------------------------------------------------
+ISYM      = 0            # keep only time-reversal; no k-point folding
+ENCUT     = 400          # Same as in structure optimization
+LMAXMIX   = 4            # Maximum l-value for the on-site PAW potential 
+LREAL     = Auto         # Avoid real-space projection approximations
+PREC      = Accurate     # High precision
+ADDGRID   = .TRUE.       # Improves numerical accuracy for forces and energy.  
+LPLANE    = .TRUE.       # Optimizes parallelization for large supercells.
+LAMBDA    = .TRUE.       # if MAGMOM = 0 0 0 ... (non‑magnetic)
+NSIM      = 8
+# ---- spin channel & initial moments ----------------------------------------
+ISPIN      = 2              # spin-polarised (collinear)
+# Example: 1 H, 28 Nb, 28 P →  adjust counts to match your POSCAR
+MAGMOM     = 1*0.0  28*0.6  28*0.0
+# └─ use the colon syntax if you prefer (VASP ≥5.4.4):
+# MAGMOM   = H:0.0  Nb:0.6  P:0.0
+# ---------------------------------------------------------------------------
+
+# --- Electronic loop (one step is enough) ------------------------------------
+# NELM      = 1            # only update occupancies
+ALGO       = Normal       # More stable electronic minimization algorithm  
+EDIFF      = 1E-8         # Tight electronic convergence
+AMIX       = 0.20
+BMIX       = 0.00010
+AMIN       = 0.010
+NELMDL     = 20             # freeze charge first 20 steps
+NELM       = 200
+
+# ---- metallic smearing ------------------------------------------------------
+ISMEAR     = 1              # Methfessel-Paxton; −1 for Gaussian
+SIGMA      = 0.20           # 0.15–0.25 eV works well for NbP slabs
+
+# --- Output ------------------------------------------------------------------
+LWAVE     = .FALSE.      # no need to write another huge file
+LCHARG    = .FALSE.
+LORBIT    = 11           # writes PROCAR for orbital-resolved bands
+NWRITE    = 2
+
+# --- Ionic Relaxation --------------------------------------------------------
+NSW      = 0
+IBRION   = -1

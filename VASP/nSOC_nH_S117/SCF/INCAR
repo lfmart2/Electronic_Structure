@@ -1,0 +1,44 @@
+###############################################################################
+#             NbP slab – non-SOC SCF (robust settings)                        #
+###############################################################################
+
+# 1.  start-up / restart
+ISTART     = 0              # fresh start (set =1 if restarting from WAVECAR)
+ICHARG     = 2              # atomic charge guess (keeps neutrality)
+
+# 2.  basis & symmetry
+ENCUT      = 400            # ≥ max(ENMAX) of Nb/P/H PAW files
+ISYM       = 0
+LREAL      = Auto           # safer for large metallic slabs + vacuum
+PREC       = Accurate
+ADDGRID    = .TRUE.
+LPLANE     = .TRUE.
+LASPH      = .TRUE.
+LMAXMIX    = 4
+
+# ---- spin channel & initial moments ----------------------------------------
+ISPIN      = 2              # spin-polarised (collinear)
+# Example: 1 H, 28 Nb, 28 P →  adjust counts to match your POSCAR
+MAGMOM     = 28*0.6 28*0.0
+# └─ use the colon syntax if you prefer (VASP ≥5.4.4):
+# MAGMOM   = H:0.0  Nb:0.6  P:0.0
+# ---------------------------------------------------------------------------
+
+# ---- metallic smearing ------------------------------------------------------
+ISMEAR     = 1              # Methfessel-Paxton; −1 for Gaussian
+SIGMA      = 0.20           # 0.15–0.25 eV works well for NbP slabs
+
+# 3.  electronic SCF & mixing
+ALGO       = Fast           # ‘Normal’ also fine; Fast is quicker here
+AMIX       = 0.20
+BMIX       = 0.00010
+AMIN       = 0.010
+NELMDL     = 10             # freeze charge first 20 steps
+NELM       = 200
+EDIFF      = 1E-7
+
+# 5.  I/O and parallel
+LWAVE      = .TRUE.         # keep for NSCF / Wannier
+LCHARG     = .TRUE.
+LORBIT     = 11
+NWRITE     = 0

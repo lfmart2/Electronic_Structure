@@ -1,0 +1,708 @@
+Input files copied to scratch directory:
+node13
+####################################
+The directory is
+/scratch/34728
+####################################
+####################################
+############ INCAR FILE ############
+####################################
+###############################################################################
+#                 NbP slab – SOC: NSCF VASP -> Wannier90                      #
+###############################################################################
+System    = NbP Weyl Semimetal with SOC  # Description of the system
+# --- Restart flags -----------------------------------------------------------
+ISTART    = 1            # read WAVECAR  (wave-functions)
+ICHARG    = 11           # read CHGCAR   (charge density)
+
+# --- Symmetry & basis --------------------------------------------------------
+ISYM      = 0            # keep only time-reversal; no k-point folding
+ENCUT     = 400          # Same as in structure optimization
+NBANDS    = 730          # ≥ SCF value (same is safest)
+LSORBIT   = .TRUE.       # Enable spin-orbit coupling (SOC) 
+LNONCOLLINEAR = .TRUE.   # Activate noncollinear magnetism  
+SAXIS     = 0 0 1        # Set spin quantization axis (adjust if needed) 
+LMAXMIX   = 4            # Maximum l-value for the on-site PAW potential 
+LREAL     = .FALSE.      # Avoid real-space projection approximations
+PREC      = Accurate     # High precision
+ADDGRID   = .TRUE.       # Improves numerical accuracy for forces and energy.  
+LPLANE    = .TRUE.       # Optimizes parallelization for large supercells.
+LAMBDA    = .TRUE.       # if MAGMOM = 0 0 0 ... (non‑magnetic)
+
+# --- Electronic loop (one step is enough) ------------------------------------
+# NELM      = 1            # only update occupancies
+ALGO      = Normal       # More stable electronic minimization algorithm  
+EDIFF     = 1E-8         # Tight electronic convergence
+
+# --- Dipole correction (keep identical to SCF) -------------------------------
+# LDIPOL    = .TRUE.
+# IDIPOL    = 3
+# DIPOL     = 0 0 40       # same z0 you chose for SCF
+
+# --- Output ------------------------------------------------------------------
+LWAVE     = .FALSE.      # no need to write another huge file
+LCHARG    = .FALSE.
+LORBIT    = 11           # writes PROCAR for orbital-resolved bands
+NWRITE    = 2
+
+# --- Ionic Relaxation --------------------------------------------------------
+NSW      = 0
+IBRION   = -1
+
+# --- Output Control ----------------------------------------------------------
+LWAVE    = .FALSE. 
+LCHARG   = .FALSE.
+LORBIT   = 0
+
+# --- Electric Field parameters for Parallel calculation ----------------------
+LWANNIER90  = .TRUE.
+LWRITE_UNK  = .FALSE.
+LCALC_AMN   = .TRUE.
+LWRITE_AMN  = .TRUE.   
+LCALC_MMN   = .TRUE.
+LWRITE_MMN  = .TRUE.
+LWRITE_SPN  = .FALSE.
+LSPN_FMTED  = .FALSE.
+LWRITE_EIG  = .TRUE.
+NUM_WANN    = 506
+####################################
+############ END INCAR #############
+####################################
+
+
+
+Starting VASP.5.4.4.pl2 calculation...
+     Year: 2025
+    Month: 05
+      Day: 29
+     Time: 09:07:36 AM
+ running on   56 total cores
+ distrk:  each k-point on   56 cores,    1 groups
+ distr:  one band on    1 cores,   56 groups
+ using from now: INCAR     
+ vasp.5.4.4.18Apr17-6-g9f103f2a35 (build May 26 2025 09:35:12) complex          
+  
+ POSCAR found type information on POSCAR  H  Nb P 
+ POSCAR found :  3 types and      57 ions
+ scaLAPACK will be used
+
+ ----------------------------------------------------------------------------- 
+|                                                                             |
+|           W    W    AA    RRRRR   N    N  II  N    N   GGGG   !!!           |
+|           W    W   A  A   R    R  NN   N  II  NN   N  G    G  !!!           |
+|           W    W  A    A  R    R  N N  N  II  N N  N  G       !!!           |
+|           W WW W  AAAAAA  RRRRR   N  N N  II  N  N N  G  GGG   !            |
+|           WW  WW  A    A  R   R   N   NN  II  N   NN  G    G                |
+|           W    W  A    A  R    R  N    N  II  N    N   GGGG   !!!           |
+|                                                                             |
+|      For optimal performance we recommend to set                            |
+|        NCORE= 4 - approx SQRT( number of cores)                             |
+|      NCORE specifies how many cores store one orbital (NPAR=cpu/NCORE).     |
+|      This setting can  greatly improve the performance of VASP for DFT.     |
+|      The default,   NCORE=1            might be grossly inefficient         |
+|      on modern multi-core architectures or massively parallel machines.     |
+|      Do your own testing !!!!                                               |
+|      Unfortunately you need to use the default for GW and RPA calculations. |
+|      (for HF NCORE is supported but not extensively tested yet)             |
+|                                                                             |
+ ----------------------------------------------------------------------------- 
+
+ Error reading item 'LAMBDA' from file INCAR.
+
+ ----------------------------------------------------------------------------- 
+|                                                                             |
+|  ADVICE TO THIS USER RUNNING 'VASP/VAMP'   (HEAR YOUR MASTER'S VOICE ...):  |
+|                                                                             |
+|      You have a (more or less) 'large supercell' and for larger cells       |
+|      it might be more efficient to use real space projection operators      |
+|      So try LREAL= Auto  in the INCAR   file.                               |
+|      Mind: If you want to do a very accurate calculations keep the          |
+|      reciprocal projection scheme          (i.e. LREAL=.FALSE.)             |
+|                                                                             |
+ ----------------------------------------------------------------------------- 
+
+ LDA part: xc-table for Pade appr. of Perdew
+
+ ----------------------------------------------------------------------------- 
+|                                                                             |
+|           W    W    AA    RRRRR   N    N  II  N    N   GGGG   !!!           |
+|           W    W   A  A   R    R  NN   N  II  NN   N  G    G  !!!           |
+|           W    W  A    A  R    R  N N  N  II  N N  N  G       !!!           |
+|           W WW W  AAAAAA  RRRRR   N  N N  II  N  N N  G  GGG   !            |
+|           WW  WW  A    A  R   R   N   NN  II  N   NN  G    G                |
+|           W    W  A    A  R    R  N    N  II  N    N   GGGG   !!!           |
+|                                                                             |
+|      The number of bands has been changed from the values supplied          |
+|      in the INCAR file. This is a result of running the parallel version.   |
+|      The orbitals not found in the WAVECAR file will be initialized with    |
+|      random numbers, which is usually adequate. For correlated              |
+|      calculations, however, you should redo the groundstate calculation.    |
+|      I found NBANDS    =      730  now  NBANDS  =     784                   |
+|                                                                             |
+ ----------------------------------------------------------------------------- 
+
+ found WAVECAR, reading the header
+  number of bands has changed, file:   596 present:   784
+  trying to continue reading WAVECAR, but it might fail
+
+ ----------------------------------------------------------------------------- 
+|                                                                             |
+|           W    W    AA    RRRRR   N    N  II  N    N   GGGG   !!!           |
+|           W    W   A  A   R    R  NN   N  II  NN   N  G    G  !!!           |
+|           W    W  A    A  R    R  N N  N  II  N N  N  G       !!!           |
+|           W WW W  AAAAAA  RRRRR   N  N N  II  N  N N  G  GGG   !            |
+|           WW  WW  A    A  R   R   N   NN  II  N   NN  G    G                |
+|           W    W  A    A  R    R  N    N  II  N    N   GGGG   !!!           |
+|                                                                             |
+|      One of the lattice vectors is very long (>50 A), but AMIN is rather    |
+|      large. This can spoil convergence since charge sloshing might occur    |
+|      along the long lattice vector. If problems with convergence are        |
+|      observed, try to decrease AMIN to a smaller values (e.g. 0.01).        |
+|      Note: this warning only applies if the selfconsistency cycle is used.  |
+|                                                                             |
+ ----------------------------------------------------------------------------- 
+
+ WARNING: stress and forces are not correct
+ POSCAR, INCAR and KPOINTS ok, starting setup
+ FFT: planning ...
+ reading WAVECAR
+ random initialization beyond band          597
+ the WAVECAR file was read successfully
+ reading imaginary part of occupancies ...
+ charge-density read from file: unknown                                 
+ reading imaginary part of occupancies ...
+ magnetization density read from file 1
+ reading imaginary part of occupancies ...
+ magnetization density read from file 2
+ reading imaginary part of occupancies ...
+ magnetization density read from file 3
+ entering main loop
+       N       E                     dE             d eps       ncg     rms          rms(c)
+DAV:   1    -0.492283515526E+03   -0.49228E+03   -0.13274E-03129192   0.131E-01
+DAV:   2    -0.492283541293E+03   -0.25767E-04   -0.23239E-04123984   0.316E-02
+DAV:   3    -0.492283543514E+03   -0.22214E-05   -0.20900E-05161896   0.909E-03
+DAV:   4    -0.492283543557E+03   -0.42979E-07   -0.43272E-07160272   0.145E-03
+DAV:   5    -0.492283543557E+03   -0.20373E-09   -0.47782E-09113288   0.167E-04
+ *---------------------------------------*
+ *             VASP2WANNIER90            *
+ *---------------------------------------*
+ *          Non-collinear spin           *
+ *            MMN calculated.            *
+ *       Projection [  1/506] done.      *
+ *       Projection [  2/506] done.      *
+ *       Projection [  3/506] done.      *
+ *       Projection [  4/506] done.      *
+ *       Projection [  5/506] done.      *
+ *       Projection [  6/506] done.      *
+ *       Projection [  7/506] done.      *
+ *       Projection [  8/506] done.      *
+ *       Projection [  9/506] done.      *
+ *       Projection [ 10/506] done.      *
+ *       Projection [ 11/506] done.      *
+ *       Projection [ 12/506] done.      *
+ *       Projection [ 13/506] done.      *
+ *       Projection [ 14/506] done.      *
+ *       Projection [ 15/506] done.      *
+ *       Projection [ 16/506] done.      *
+ *       Projection [ 17/506] done.      *
+ *       Projection [ 18/506] done.      *
+ *       Projection [ 19/506] done.      *
+ *       Projection [ 20/506] done.      *
+ *       Projection [ 21/506] done.      *
+ *       Projection [ 22/506] done.      *
+ *       Projection [ 23/506] done.      *
+ *       Projection [ 24/506] done.      *
+ *       Projection [ 25/506] done.      *
+ *       Projection [ 26/506] done.      *
+ *       Projection [ 27/506] done.      *
+ *       Projection [ 28/506] done.      *
+ *       Projection [ 29/506] done.      *
+ *       Projection [ 30/506] done.      *
+ *       Projection [ 31/506] done.      *
+ *       Projection [ 32/506] done.      *
+ *       Projection [ 33/506] done.      *
+ *       Projection [ 34/506] done.      *
+ *       Projection [ 35/506] done.      *
+ *       Projection [ 36/506] done.      *
+ *       Projection [ 37/506] done.      *
+ *       Projection [ 38/506] done.      *
+ *       Projection [ 39/506] done.      *
+ *       Projection [ 40/506] done.      *
+ *       Projection [ 41/506] done.      *
+ *       Projection [ 42/506] done.      *
+ *       Projection [ 43/506] done.      *
+ *       Projection [ 44/506] done.      *
+ *       Projection [ 45/506] done.      *
+ *       Projection [ 46/506] done.      *
+ *       Projection [ 47/506] done.      *
+ *       Projection [ 48/506] done.      *
+ *       Projection [ 49/506] done.      *
+ *       Projection [ 50/506] done.      *
+ *       Projection [ 51/506] done.      *
+ *       Projection [ 52/506] done.      *
+ *       Projection [ 53/506] done.      *
+ *       Projection [ 54/506] done.      *
+ *       Projection [ 55/506] done.      *
+ *       Projection [ 56/506] done.      *
+ *       Projection [ 57/506] done.      *
+ *       Projection [ 58/506] done.      *
+ *       Projection [ 59/506] done.      *
+ *       Projection [ 60/506] done.      *
+ *       Projection [ 61/506] done.      *
+ *       Projection [ 62/506] done.      *
+ *       Projection [ 63/506] done.      *
+ *       Projection [ 64/506] done.      *
+ *       Projection [ 65/506] done.      *
+ *       Projection [ 66/506] done.      *
+ *       Projection [ 67/506] done.      *
+ *       Projection [ 68/506] done.      *
+ *       Projection [ 69/506] done.      *
+ *       Projection [ 70/506] done.      *
+ *       Projection [ 71/506] done.      *
+ *       Projection [ 72/506] done.      *
+ *       Projection [ 73/506] done.      *
+ *       Projection [ 74/506] done.      *
+ *       Projection [ 75/506] done.      *
+ *       Projection [ 76/506] done.      *
+ *       Projection [ 77/506] done.      *
+ *       Projection [ 78/506] done.      *
+ *       Projection [ 79/506] done.      *
+ *       Projection [ 80/506] done.      *
+ *       Projection [ 81/506] done.      *
+ *       Projection [ 82/506] done.      *
+ *       Projection [ 83/506] done.      *
+ *       Projection [ 84/506] done.      *
+ *       Projection [ 85/506] done.      *
+ *       Projection [ 86/506] done.      *
+ *       Projection [ 87/506] done.      *
+ *       Projection [ 88/506] done.      *
+ *       Projection [ 89/506] done.      *
+ *       Projection [ 90/506] done.      *
+ *       Projection [ 91/506] done.      *
+ *       Projection [ 92/506] done.      *
+ *       Projection [ 93/506] done.      *
+ *       Projection [ 94/506] done.      *
+ *       Projection [ 95/506] done.      *
+ *       Projection [ 96/506] done.      *
+ *       Projection [ 97/506] done.      *
+ *       Projection [ 98/506] done.      *
+ *       Projection [ 99/506] done.      *
+ *       Projection [100/506] done.      *
+ *       Projection [101/506] done.      *
+ *       Projection [102/506] done.      *
+ *       Projection [103/506] done.      *
+ *       Projection [104/506] done.      *
+ *       Projection [105/506] done.      *
+ *       Projection [106/506] done.      *
+ *       Projection [107/506] done.      *
+ *       Projection [108/506] done.      *
+ *       Projection [109/506] done.      *
+ *       Projection [110/506] done.      *
+ *       Projection [111/506] done.      *
+ *       Projection [112/506] done.      *
+ *       Projection [113/506] done.      *
+ *       Projection [114/506] done.      *
+ *       Projection [115/506] done.      *
+ *       Projection [116/506] done.      *
+ *       Projection [117/506] done.      *
+ *       Projection [118/506] done.      *
+ *       Projection [119/506] done.      *
+ *       Projection [120/506] done.      *
+ *       Projection [121/506] done.      *
+ *       Projection [122/506] done.      *
+ *       Projection [123/506] done.      *
+ *       Projection [124/506] done.      *
+ *       Projection [125/506] done.      *
+ *       Projection [126/506] done.      *
+ *       Projection [127/506] done.      *
+ *       Projection [128/506] done.      *
+ *       Projection [129/506] done.      *
+ *       Projection [130/506] done.      *
+ *       Projection [131/506] done.      *
+ *       Projection [132/506] done.      *
+ *       Projection [133/506] done.      *
+ *       Projection [134/506] done.      *
+ *       Projection [135/506] done.      *
+ *       Projection [136/506] done.      *
+ *       Projection [137/506] done.      *
+ *       Projection [138/506] done.      *
+ *       Projection [139/506] done.      *
+ *       Projection [140/506] done.      *
+ *       Projection [141/506] done.      *
+ *       Projection [142/506] done.      *
+ *       Projection [143/506] done.      *
+ *       Projection [144/506] done.      *
+ *       Projection [145/506] done.      *
+ *       Projection [146/506] done.      *
+ *       Projection [147/506] done.      *
+ *       Projection [148/506] done.      *
+ *       Projection [149/506] done.      *
+ *       Projection [150/506] done.      *
+ *       Projection [151/506] done.      *
+ *       Projection [152/506] done.      *
+ *       Projection [153/506] done.      *
+ *       Projection [154/506] done.      *
+ *       Projection [155/506] done.      *
+ *       Projection [156/506] done.      *
+ *       Projection [157/506] done.      *
+ *       Projection [158/506] done.      *
+ *       Projection [159/506] done.      *
+ *       Projection [160/506] done.      *
+ *       Projection [161/506] done.      *
+ *       Projection [162/506] done.      *
+ *       Projection [163/506] done.      *
+ *       Projection [164/506] done.      *
+ *       Projection [165/506] done.      *
+ *       Projection [166/506] done.      *
+ *       Projection [167/506] done.      *
+ *       Projection [168/506] done.      *
+ *       Projection [169/506] done.      *
+ *       Projection [170/506] done.      *
+ *       Projection [171/506] done.      *
+ *       Projection [172/506] done.      *
+ *       Projection [173/506] done.      *
+ *       Projection [174/506] done.      *
+ *       Projection [175/506] done.      *
+ *       Projection [176/506] done.      *
+ *       Projection [177/506] done.      *
+ *       Projection [178/506] done.      *
+ *       Projection [179/506] done.      *
+ *       Projection [180/506] done.      *
+ *       Projection [181/506] done.      *
+ *       Projection [182/506] done.      *
+ *       Projection [183/506] done.      *
+ *       Projection [184/506] done.      *
+ *       Projection [185/506] done.      *
+ *       Projection [186/506] done.      *
+ *       Projection [187/506] done.      *
+ *       Projection [188/506] done.      *
+ *       Projection [189/506] done.      *
+ *       Projection [190/506] done.      *
+ *       Projection [191/506] done.      *
+ *       Projection [192/506] done.      *
+ *       Projection [193/506] done.      *
+ *       Projection [194/506] done.      *
+ *       Projection [195/506] done.      *
+ *       Projection [196/506] done.      *
+ *       Projection [197/506] done.      *
+ *       Projection [198/506] done.      *
+ *       Projection [199/506] done.      *
+ *       Projection [200/506] done.      *
+ *       Projection [201/506] done.      *
+ *       Projection [202/506] done.      *
+ *       Projection [203/506] done.      *
+ *       Projection [204/506] done.      *
+ *       Projection [205/506] done.      *
+ *       Projection [206/506] done.      *
+ *       Projection [207/506] done.      *
+ *       Projection [208/506] done.      *
+ *       Projection [209/506] done.      *
+ *       Projection [210/506] done.      *
+ *       Projection [211/506] done.      *
+ *       Projection [212/506] done.      *
+ *       Projection [213/506] done.      *
+ *       Projection [214/506] done.      *
+ *       Projection [215/506] done.      *
+ *       Projection [216/506] done.      *
+ *       Projection [217/506] done.      *
+ *       Projection [218/506] done.      *
+ *       Projection [219/506] done.      *
+ *       Projection [220/506] done.      *
+ *       Projection [221/506] done.      *
+ *       Projection [222/506] done.      *
+ *       Projection [223/506] done.      *
+ *       Projection [224/506] done.      *
+ *       Projection [225/506] done.      *
+ *       Projection [226/506] done.      *
+ *       Projection [227/506] done.      *
+ *       Projection [228/506] done.      *
+ *       Projection [229/506] done.      *
+ *       Projection [230/506] done.      *
+ *       Projection [231/506] done.      *
+ *       Projection [232/506] done.      *
+ *       Projection [233/506] done.      *
+ *       Projection [234/506] done.      *
+ *       Projection [235/506] done.      *
+ *       Projection [236/506] done.      *
+ *       Projection [237/506] done.      *
+ *       Projection [238/506] done.      *
+ *       Projection [239/506] done.      *
+ *       Projection [240/506] done.      *
+ *       Projection [241/506] done.      *
+ *       Projection [242/506] done.      *
+ *       Projection [243/506] done.      *
+ *       Projection [244/506] done.      *
+ *       Projection [245/506] done.      *
+ *       Projection [246/506] done.      *
+ *       Projection [247/506] done.      *
+ *       Projection [248/506] done.      *
+ *       Projection [249/506] done.      *
+ *       Projection [250/506] done.      *
+ *       Projection [251/506] done.      *
+ *       Projection [252/506] done.      *
+ *       Projection [253/506] done.      *
+ *       Projection [254/506] done.      *
+ *       Projection [255/506] done.      *
+ *       Projection [256/506] done.      *
+ *       Projection [257/506] done.      *
+ *       Projection [258/506] done.      *
+ *       Projection [259/506] done.      *
+ *       Projection [260/506] done.      *
+ *       Projection [261/506] done.      *
+ *       Projection [262/506] done.      *
+ *       Projection [263/506] done.      *
+ *       Projection [264/506] done.      *
+ *       Projection [265/506] done.      *
+ *       Projection [266/506] done.      *
+ *       Projection [267/506] done.      *
+ *       Projection [268/506] done.      *
+ *       Projection [269/506] done.      *
+ *       Projection [270/506] done.      *
+ *       Projection [271/506] done.      *
+ *       Projection [272/506] done.      *
+ *       Projection [273/506] done.      *
+ *       Projection [274/506] done.      *
+ *       Projection [275/506] done.      *
+ *       Projection [276/506] done.      *
+ *       Projection [277/506] done.      *
+ *       Projection [278/506] done.      *
+ *       Projection [279/506] done.      *
+ *       Projection [280/506] done.      *
+ *       Projection [281/506] done.      *
+ *       Projection [282/506] done.      *
+ *       Projection [283/506] done.      *
+ *       Projection [284/506] done.      *
+ *       Projection [285/506] done.      *
+ *       Projection [286/506] done.      *
+ *       Projection [287/506] done.      *
+ *       Projection [288/506] done.      *
+ *       Projection [289/506] done.      *
+ *       Projection [290/506] done.      *
+ *       Projection [291/506] done.      *
+ *       Projection [292/506] done.      *
+ *       Projection [293/506] done.      *
+ *       Projection [294/506] done.      *
+ *       Projection [295/506] done.      *
+ *       Projection [296/506] done.      *
+ *       Projection [297/506] done.      *
+ *       Projection [298/506] done.      *
+ *       Projection [299/506] done.      *
+ *       Projection [300/506] done.      *
+ *       Projection [301/506] done.      *
+ *       Projection [302/506] done.      *
+ *       Projection [303/506] done.      *
+ *       Projection [304/506] done.      *
+ *       Projection [305/506] done.      *
+ *       Projection [306/506] done.      *
+ *       Projection [307/506] done.      *
+ *       Projection [308/506] done.      *
+ *       Projection [309/506] done.      *
+ *       Projection [310/506] done.      *
+ *       Projection [311/506] done.      *
+ *       Projection [312/506] done.      *
+ *       Projection [313/506] done.      *
+ *       Projection [314/506] done.      *
+ *       Projection [315/506] done.      *
+ *       Projection [316/506] done.      *
+ *       Projection [317/506] done.      *
+ *       Projection [318/506] done.      *
+ *       Projection [319/506] done.      *
+ *       Projection [320/506] done.      *
+ *       Projection [321/506] done.      *
+ *       Projection [322/506] done.      *
+ *       Projection [323/506] done.      *
+ *       Projection [324/506] done.      *
+ *       Projection [325/506] done.      *
+ *       Projection [326/506] done.      *
+ *       Projection [327/506] done.      *
+ *       Projection [328/506] done.      *
+ *       Projection [329/506] done.      *
+ *       Projection [330/506] done.      *
+ *       Projection [331/506] done.      *
+ *       Projection [332/506] done.      *
+ *       Projection [333/506] done.      *
+ *       Projection [334/506] done.      *
+ *       Projection [335/506] done.      *
+ *       Projection [336/506] done.      *
+ *       Projection [337/506] done.      *
+ *       Projection [338/506] done.      *
+ *       Projection [339/506] done.      *
+ *       Projection [340/506] done.      *
+ *       Projection [341/506] done.      *
+ *       Projection [342/506] done.      *
+ *       Projection [343/506] done.      *
+ *       Projection [344/506] done.      *
+ *       Projection [345/506] done.      *
+ *       Projection [346/506] done.      *
+ *       Projection [347/506] done.      *
+ *       Projection [348/506] done.      *
+ *       Projection [349/506] done.      *
+ *       Projection [350/506] done.      *
+ *       Projection [351/506] done.      *
+ *       Projection [352/506] done.      *
+ *       Projection [353/506] done.      *
+ *       Projection [354/506] done.      *
+ *       Projection [355/506] done.      *
+ *       Projection [356/506] done.      *
+ *       Projection [357/506] done.      *
+ *       Projection [358/506] done.      *
+ *       Projection [359/506] done.      *
+ *       Projection [360/506] done.      *
+ *       Projection [361/506] done.      *
+ *       Projection [362/506] done.      *
+ *       Projection [363/506] done.      *
+ *       Projection [364/506] done.      *
+ *       Projection [365/506] done.      *
+ *       Projection [366/506] done.      *
+ *       Projection [367/506] done.      *
+ *       Projection [368/506] done.      *
+ *       Projection [369/506] done.      *
+ *       Projection [370/506] done.      *
+ *       Projection [371/506] done.      *
+ *       Projection [372/506] done.      *
+ *       Projection [373/506] done.      *
+ *       Projection [374/506] done.      *
+ *       Projection [375/506] done.      *
+ *       Projection [376/506] done.      *
+ *       Projection [377/506] done.      *
+ *       Projection [378/506] done.      *
+ *       Projection [379/506] done.      *
+ *       Projection [380/506] done.      *
+ *       Projection [381/506] done.      *
+ *       Projection [382/506] done.      *
+ *       Projection [383/506] done.      *
+ *       Projection [384/506] done.      *
+ *       Projection [385/506] done.      *
+ *       Projection [386/506] done.      *
+ *       Projection [387/506] done.      *
+ *       Projection [388/506] done.      *
+ *       Projection [389/506] done.      *
+ *       Projection [390/506] done.      *
+ *       Projection [391/506] done.      *
+ *       Projection [392/506] done.      *
+ *       Projection [393/506] done.      *
+ *       Projection [394/506] done.      *
+ *       Projection [395/506] done.      *
+ *       Projection [396/506] done.      *
+ *       Projection [397/506] done.      *
+ *       Projection [398/506] done.      *
+ *       Projection [399/506] done.      *
+ *       Projection [400/506] done.      *
+ *       Projection [401/506] done.      *
+ *       Projection [402/506] done.      *
+ *       Projection [403/506] done.      *
+ *       Projection [404/506] done.      *
+ *       Projection [405/506] done.      *
+ *       Projection [406/506] done.      *
+ *       Projection [407/506] done.      *
+ *       Projection [408/506] done.      *
+ *       Projection [409/506] done.      *
+ *       Projection [410/506] done.      *
+ *       Projection [411/506] done.      *
+ *       Projection [412/506] done.      *
+ *       Projection [413/506] done.      *
+ *       Projection [414/506] done.      *
+ *       Projection [415/506] done.      *
+ *       Projection [416/506] done.      *
+ *       Projection [417/506] done.      *
+ *       Projection [418/506] done.      *
+ *       Projection [419/506] done.      *
+ *       Projection [420/506] done.      *
+ *       Projection [421/506] done.      *
+ *       Projection [422/506] done.      *
+ *       Projection [423/506] done.      *
+ *       Projection [424/506] done.      *
+ *       Projection [425/506] done.      *
+ *       Projection [426/506] done.      *
+ *       Projection [427/506] done.      *
+ *       Projection [428/506] done.      *
+ *       Projection [429/506] done.      *
+ *       Projection [430/506] done.      *
+ *       Projection [431/506] done.      *
+ *       Projection [432/506] done.      *
+ *       Projection [433/506] done.      *
+ *       Projection [434/506] done.      *
+ *       Projection [435/506] done.      *
+ *       Projection [436/506] done.      *
+ *       Projection [437/506] done.      *
+ *       Projection [438/506] done.      *
+ *       Projection [439/506] done.      *
+ *       Projection [440/506] done.      *
+ *       Projection [441/506] done.      *
+ *       Projection [442/506] done.      *
+ *       Projection [443/506] done.      *
+ *       Projection [444/506] done.      *
+ *       Projection [445/506] done.      *
+ *       Projection [446/506] done.      *
+ *       Projection [447/506] done.      *
+ *       Projection [448/506] done.      *
+ *       Projection [449/506] done.      *
+ *       Projection [450/506] done.      *
+ *       Projection [451/506] done.      *
+ *       Projection [452/506] done.      *
+ *       Projection [453/506] done.      *
+ *       Projection [454/506] done.      *
+ *       Projection [455/506] done.      *
+ *       Projection [456/506] done.      *
+ *       Projection [457/506] done.      *
+ *       Projection [458/506] done.      *
+ *       Projection [459/506] done.      *
+ *       Projection [460/506] done.      *
+ *       Projection [461/506] done.      *
+ *       Projection [462/506] done.      *
+ *       Projection [463/506] done.      *
+ *       Projection [464/506] done.      *
+ *       Projection [465/506] done.      *
+ *       Projection [466/506] done.      *
+ *       Projection [467/506] done.      *
+ *       Projection [468/506] done.      *
+ *       Projection [469/506] done.      *
+ *       Projection [470/506] done.      *
+ *       Projection [471/506] done.      *
+ *       Projection [472/506] done.      *
+ *       Projection [473/506] done.      *
+ *       Projection [474/506] done.      *
+ *       Projection [475/506] done.      *
+ *       Projection [476/506] done.      *
+ *       Projection [477/506] done.      *
+ *       Projection [478/506] done.      *
+ *       Projection [479/506] done.      *
+ *       Projection [480/506] done.      *
+ *       Projection [481/506] done.      *
+ *       Projection [482/506] done.      *
+ *       Projection [483/506] done.      *
+ *       Projection [484/506] done.      *
+ *       Projection [485/506] done.      *
+ *       Projection [486/506] done.      *
+ *       Projection [487/506] done.      *
+ *       Projection [488/506] done.      *
+ *       Projection [489/506] done.      *
+ *       Projection [490/506] done.      *
+ *       Projection [491/506] done.      *
+ *       Projection [492/506] done.      *
+ *       Projection [493/506] done.      *
+ *       Projection [494/506] done.      *
+ *       Projection [495/506] done.      *
+ *       Projection [496/506] done.      *
+ *       Projection [497/506] done.      *
+ *       Projection [498/506] done.      *
+ *       Projection [499/506] done.      *
+ *       Projection [500/506] done.      *
+ *       Projection [501/506] done.      *
+ *       Projection [502/506] done.      *
+ *       Projection [503/506] done.      *
+ *       Projection [504/506] done.      *
+ *       Projection [505/506] done.      *
+ *       Projection [506/506] done.      *
+ *            AMN calculated.            *
+ *            EIG written.               *
+ *---------------------------------------*
+   1 F= -.49228354E+03 E0= -.49231470E+03  d E =0.934814E-01  mag=    -0.0001    -0.0001    -0.0001
+
+
+####################################
+VASP.5.4.4.pl2 calculation finalized...
+     Year: 2025
+    Month: 05
+      Day: 31
+     Time: 01:38:36 AM

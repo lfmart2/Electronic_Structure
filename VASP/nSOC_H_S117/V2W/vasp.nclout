@@ -1,0 +1,439 @@
+Input files copied to scratch directory:
+node13
+####################################
+The directory is
+/scratch/22822
+####################################
+####################################
+############ INCAR FILE ############
+####################################
+###############################################################################
+#                   NbP slab: NSCF VASP -> Wannier90                          #
+###############################################################################
+System    = NbP Weyl Semimetal with SOC  # Description of the system
+# --- Restart flags -----------------------------------------------------------
+ISTART    = 1            # read WAVECAR  (wave-functions)
+ICHARG    = 11           # read CHGCAR   (charge density)
+
+# --- Symmetry & basis --------------------------------------------------------
+ISYM      = 0            # keep only time-reversal; no k-point folding
+ENCUT     = 400          # Same as in structure optimization
+NBANDS    = 365          # ≥ SCF value (same is safest)
+LMAXMIX   = 4            # Maximum l-value for the on-site PAW potential 
+LREAL     = .FALSE.      # Avoid real-space projection approximations
+PREC      = Accurate     # High precision
+ADDGRID   = .TRUE.       # Improves numerical accuracy for forces and energy.  
+LPLANE    = .TRUE.       # Optimizes parallelization for large supercells.
+LAMBDA    = .TRUE.       # if MAGMOM = 0 0 0 ... (non‑magnetic)
+
+# ---- spin channel & initial moments ----------------------------------------
+ISPIN      = 2              # spin-polarised (collinear)
+# Example: 1 H, 28 Nb, 28 P →  adjust counts to match your POSCAR
+MAGMOM     = 1*0.0  28*0.6  28*0.0
+# └─ use the colon syntax if you prefer (VASP ≥5.4.4):
+# MAGMOM   = H:0.0  Nb:0.6  P:0.0
+# ---------------------------------------------------------------------------
+
+# --- Electronic loop (one step is enough) ------------------------------------
+# NELM      = 1            # only update occupancies
+ALGO       = Normal       # More stable electronic minimization algorithm  
+EDIFF      = 1E-8         # Tight electronic convergence
+AMIX       = 0.20
+BMIX       = 0.00010
+AMIN       = 0.010
+NELM       = 200
+
+# ---- metallic smearing ------------------------------------------------------
+ISMEAR     = 1              # Methfessel-Paxton; −1 for Gaussian
+SIGMA      = 0.20           # 0.15–0.25 eV works well for NbP slabs
+
+# --- Output ------------------------------------------------------------------
+LWAVE     = .FALSE.      # no need to write another huge file
+LCHARG    = .FALSE.
+LORBIT    = 11           # writes PROCAR for orbital-resolved bands
+NWRITE    = 2
+
+# --- Ionic Relaxation --------------------------------------------------------
+NSW      = 0
+IBRION   = -1
+
+# --- Output Control ----------------------------------------------------------
+LWAVE    = .FALSE. 
+LCHARG   = .FALSE.
+
+# --- Electric Field parameters for Parallel calculation ----------------------
+LWANNIER90  = .TRUE.
+LWRITE_UNK  = .FALSE.
+LCALC_AMN   = .TRUE.
+LWRITE_AMN  = .TRUE.
+LCALC_MMN   = .TRUE.
+LWRITE_MMN  = .TRUE.
+LWRITE_SPN  = .FALSE.
+LSPN_FMTED  = .FALSE.
+LWRITE_EIG  = .TRUE.
+NUM_WANN    = 253
+W90_SPIN    = 1
+####################################
+############ END INCAR #############
+####################################
+
+
+
+Starting VASP.5.4.4.pl2 calculation...
+     Year: 2025
+    Month: 06
+      Day: 10
+     Time: 03:28:15 PM
+ running on   56 total cores
+ distrk:  each k-point on   56 cores,    1 groups
+ distr:  one band on    1 cores,   56 groups
+ using from now: INCAR     
+ vasp.5.4.4.18Apr17-6-g9f103f2a35 (build May 26 2025 09:35:12) complex          
+  
+ POSCAR found type information on POSCAR  H  Nb P 
+ POSCAR found :  3 types and      57 ions
+ scaLAPACK will be used
+
+ ----------------------------------------------------------------------------- 
+|                                                                             |
+|           W    W    AA    RRRRR   N    N  II  N    N   GGGG   !!!           |
+|           W    W   A  A   R    R  NN   N  II  NN   N  G    G  !!!           |
+|           W    W  A    A  R    R  N N  N  II  N N  N  G       !!!           |
+|           W WW W  AAAAAA  RRRRR   N  N N  II  N  N N  G  GGG   !            |
+|           WW  WW  A    A  R   R   N   NN  II  N   NN  G    G                |
+|           W    W  A    A  R    R  N    N  II  N    N   GGGG   !!!           |
+|                                                                             |
+|      For optimal performance we recommend to set                            |
+|        NCORE= 4 - approx SQRT( number of cores)                             |
+|      NCORE specifies how many cores store one orbital (NPAR=cpu/NCORE).     |
+|      This setting can  greatly improve the performance of VASP for DFT.     |
+|      The default,   NCORE=1            might be grossly inefficient         |
+|      on modern multi-core architectures or massively parallel machines.     |
+|      Do your own testing !!!!                                               |
+|      Unfortunately you need to use the default for GW and RPA calculations. |
+|      (for HF NCORE is supported but not extensively tested yet)             |
+|                                                                             |
+ ----------------------------------------------------------------------------- 
+
+ Error reading item 'LAMBDA' from file INCAR.
+
+ ----------------------------------------------------------------------------- 
+|                                                                             |
+|  ADVICE TO THIS USER RUNNING 'VASP/VAMP'   (HEAR YOUR MASTER'S VOICE ...):  |
+|                                                                             |
+|      You have a (more or less) 'large supercell' and for larger cells       |
+|      it might be more efficient to use real space projection operators      |
+|      So try LREAL= Auto  in the INCAR   file.                               |
+|      Mind: If you want to do a very accurate calculations keep the          |
+|      reciprocal projection scheme          (i.e. LREAL=.FALSE.)             |
+|                                                                             |
+ ----------------------------------------------------------------------------- 
+
+ LDA part: xc-table for Pade appr. of Perdew
+
+ ----------------------------------------------------------------------------- 
+|                                                                             |
+|           W    W    AA    RRRRR   N    N  II  N    N   GGGG   !!!           |
+|           W    W   A  A   R    R  NN   N  II  NN   N  G    G  !!!           |
+|           W    W  A    A  R    R  N N  N  II  N N  N  G       !!!           |
+|           W WW W  AAAAAA  RRRRR   N  N N  II  N  N N  G  GGG   !            |
+|           WW  WW  A    A  R   R   N   NN  II  N   NN  G    G                |
+|           W    W  A    A  R    R  N    N  II  N    N   GGGG   !!!           |
+|                                                                             |
+|      The number of bands has been changed from the values supplied          |
+|      in the INCAR file. This is a result of running the parallel version.   |
+|      The orbitals not found in the WAVECAR file will be initialized with    |
+|      random numbers, which is usually adequate. For correlated              |
+|      calculations, however, you should redo the groundstate calculation.    |
+|      I found NBANDS    =      365  now  NBANDS  =     392                   |
+|                                                                             |
+ ----------------------------------------------------------------------------- 
+
+ found WAVECAR, reading the header
+  number of bands has changed, file:   277 present:   392
+  trying to continue reading WAVECAR, but it might fail
+ WARNING: stress and forces are not correct
+ POSCAR, INCAR and KPOINTS ok, starting setup
+ FFT: planning ...
+ reading WAVECAR
+ random initialization beyond band          278
+ the WAVECAR file was read successfully
+ charge-density read from file: unknown                                 
+ magnetization density read from file 1
+ entering main loop
+       N       E                     dE             d eps       ncg     rms          rms(c)
+DAV:   1    -0.490785370837E+03   -0.49079E+03   -0.13753E-03 56896   0.124E-01
+DAV:   2    -0.490785399777E+03   -0.28940E-04   -0.24734E-04 54992   0.322E-02
+DAV:   3    -0.490785403135E+03   -0.33585E-05   -0.31004E-05 82040   0.110E-02
+DAV:   4    -0.490785403201E+03   -0.65520E-07   -0.64697E-07 79968   0.153E-03
+DAV:   5    -0.490785403201E+03   -0.46566E-09   -0.55266E-09 55720   0.162E-04
+ *---------------------------------------*
+ *             VASP2WANNIER90            *
+ *---------------------------------------*
+ *          Collinear spin -> up         *
+ *            MMN calculated.            *
+ *       Projection [  1/253] done.      *
+ *       Projection [  2/253] done.      *
+ *       Projection [  3/253] done.      *
+ *       Projection [  4/253] done.      *
+ *       Projection [  5/253] done.      *
+ *       Projection [  6/253] done.      *
+ *       Projection [  7/253] done.      *
+ *       Projection [  8/253] done.      *
+ *       Projection [  9/253] done.      *
+ *       Projection [ 10/253] done.      *
+ *       Projection [ 11/253] done.      *
+ *       Projection [ 12/253] done.      *
+ *       Projection [ 13/253] done.      *
+ *       Projection [ 14/253] done.      *
+ *       Projection [ 15/253] done.      *
+ *       Projection [ 16/253] done.      *
+ *       Projection [ 17/253] done.      *
+ *       Projection [ 18/253] done.      *
+ *       Projection [ 19/253] done.      *
+ *       Projection [ 20/253] done.      *
+ *       Projection [ 21/253] done.      *
+ *       Projection [ 22/253] done.      *
+ *       Projection [ 23/253] done.      *
+ *       Projection [ 24/253] done.      *
+ *       Projection [ 25/253] done.      *
+ *       Projection [ 26/253] done.      *
+ *       Projection [ 27/253] done.      *
+ *       Projection [ 28/253] done.      *
+ *       Projection [ 29/253] done.      *
+ *       Projection [ 30/253] done.      *
+ *       Projection [ 31/253] done.      *
+ *       Projection [ 32/253] done.      *
+ *       Projection [ 33/253] done.      *
+ *       Projection [ 34/253] done.      *
+ *       Projection [ 35/253] done.      *
+ *       Projection [ 36/253] done.      *
+ *       Projection [ 37/253] done.      *
+ *       Projection [ 38/253] done.      *
+ *       Projection [ 39/253] done.      *
+ *       Projection [ 40/253] done.      *
+ *       Projection [ 41/253] done.      *
+ *       Projection [ 42/253] done.      *
+ *       Projection [ 43/253] done.      *
+ *       Projection [ 44/253] done.      *
+ *       Projection [ 45/253] done.      *
+ *       Projection [ 46/253] done.      *
+ *       Projection [ 47/253] done.      *
+ *       Projection [ 48/253] done.      *
+ *       Projection [ 49/253] done.      *
+ *       Projection [ 50/253] done.      *
+ *       Projection [ 51/253] done.      *
+ *       Projection [ 52/253] done.      *
+ *       Projection [ 53/253] done.      *
+ *       Projection [ 54/253] done.      *
+ *       Projection [ 55/253] done.      *
+ *       Projection [ 56/253] done.      *
+ *       Projection [ 57/253] done.      *
+ *       Projection [ 58/253] done.      *
+ *       Projection [ 59/253] done.      *
+ *       Projection [ 60/253] done.      *
+ *       Projection [ 61/253] done.      *
+ *       Projection [ 62/253] done.      *
+ *       Projection [ 63/253] done.      *
+ *       Projection [ 64/253] done.      *
+ *       Projection [ 65/253] done.      *
+ *       Projection [ 66/253] done.      *
+ *       Projection [ 67/253] done.      *
+ *       Projection [ 68/253] done.      *
+ *       Projection [ 69/253] done.      *
+ *       Projection [ 70/253] done.      *
+ *       Projection [ 71/253] done.      *
+ *       Projection [ 72/253] done.      *
+ *       Projection [ 73/253] done.      *
+ *       Projection [ 74/253] done.      *
+ *       Projection [ 75/253] done.      *
+ *       Projection [ 76/253] done.      *
+ *       Projection [ 77/253] done.      *
+ *       Projection [ 78/253] done.      *
+ *       Projection [ 79/253] done.      *
+ *       Projection [ 80/253] done.      *
+ *       Projection [ 81/253] done.      *
+ *       Projection [ 82/253] done.      *
+ *       Projection [ 83/253] done.      *
+ *       Projection [ 84/253] done.      *
+ *       Projection [ 85/253] done.      *
+ *       Projection [ 86/253] done.      *
+ *       Projection [ 87/253] done.      *
+ *       Projection [ 88/253] done.      *
+ *       Projection [ 89/253] done.      *
+ *       Projection [ 90/253] done.      *
+ *       Projection [ 91/253] done.      *
+ *       Projection [ 92/253] done.      *
+ *       Projection [ 93/253] done.      *
+ *       Projection [ 94/253] done.      *
+ *       Projection [ 95/253] done.      *
+ *       Projection [ 96/253] done.      *
+ *       Projection [ 97/253] done.      *
+ *       Projection [ 98/253] done.      *
+ *       Projection [ 99/253] done.      *
+ *       Projection [100/253] done.      *
+ *       Projection [101/253] done.      *
+ *       Projection [102/253] done.      *
+ *       Projection [103/253] done.      *
+ *       Projection [104/253] done.      *
+ *       Projection [105/253] done.      *
+ *       Projection [106/253] done.      *
+ *       Projection [107/253] done.      *
+ *       Projection [108/253] done.      *
+ *       Projection [109/253] done.      *
+ *       Projection [110/253] done.      *
+ *       Projection [111/253] done.      *
+ *       Projection [112/253] done.      *
+ *       Projection [113/253] done.      *
+ *       Projection [114/253] done.      *
+ *       Projection [115/253] done.      *
+ *       Projection [116/253] done.      *
+ *       Projection [117/253] done.      *
+ *       Projection [118/253] done.      *
+ *       Projection [119/253] done.      *
+ *       Projection [120/253] done.      *
+ *       Projection [121/253] done.      *
+ *       Projection [122/253] done.      *
+ *       Projection [123/253] done.      *
+ *       Projection [124/253] done.      *
+ *       Projection [125/253] done.      *
+ *       Projection [126/253] done.      *
+ *       Projection [127/253] done.      *
+ *       Projection [128/253] done.      *
+ *       Projection [129/253] done.      *
+ *       Projection [130/253] done.      *
+ *       Projection [131/253] done.      *
+ *       Projection [132/253] done.      *
+ *       Projection [133/253] done.      *
+ *       Projection [134/253] done.      *
+ *       Projection [135/253] done.      *
+ *       Projection [136/253] done.      *
+ *       Projection [137/253] done.      *
+ *       Projection [138/253] done.      *
+ *       Projection [139/253] done.      *
+ *       Projection [140/253] done.      *
+ *       Projection [141/253] done.      *
+ *       Projection [142/253] done.      *
+ *       Projection [143/253] done.      *
+ *       Projection [144/253] done.      *
+ *       Projection [145/253] done.      *
+ *       Projection [146/253] done.      *
+ *       Projection [147/253] done.      *
+ *       Projection [148/253] done.      *
+ *       Projection [149/253] done.      *
+ *       Projection [150/253] done.      *
+ *       Projection [151/253] done.      *
+ *       Projection [152/253] done.      *
+ *       Projection [153/253] done.      *
+ *       Projection [154/253] done.      *
+ *       Projection [155/253] done.      *
+ *       Projection [156/253] done.      *
+ *       Projection [157/253] done.      *
+ *       Projection [158/253] done.      *
+ *       Projection [159/253] done.      *
+ *       Projection [160/253] done.      *
+ *       Projection [161/253] done.      *
+ *       Projection [162/253] done.      *
+ *       Projection [163/253] done.      *
+ *       Projection [164/253] done.      *
+ *       Projection [165/253] done.      *
+ *       Projection [166/253] done.      *
+ *       Projection [167/253] done.      *
+ *       Projection [168/253] done.      *
+ *       Projection [169/253] done.      *
+ *       Projection [170/253] done.      *
+ *       Projection [171/253] done.      *
+ *       Projection [172/253] done.      *
+ *       Projection [173/253] done.      *
+ *       Projection [174/253] done.      *
+ *       Projection [175/253] done.      *
+ *       Projection [176/253] done.      *
+ *       Projection [177/253] done.      *
+ *       Projection [178/253] done.      *
+ *       Projection [179/253] done.      *
+ *       Projection [180/253] done.      *
+ *       Projection [181/253] done.      *
+ *       Projection [182/253] done.      *
+ *       Projection [183/253] done.      *
+ *       Projection [184/253] done.      *
+ *       Projection [185/253] done.      *
+ *       Projection [186/253] done.      *
+ *       Projection [187/253] done.      *
+ *       Projection [188/253] done.      *
+ *       Projection [189/253] done.      *
+ *       Projection [190/253] done.      *
+ *       Projection [191/253] done.      *
+ *       Projection [192/253] done.      *
+ *       Projection [193/253] done.      *
+ *       Projection [194/253] done.      *
+ *       Projection [195/253] done.      *
+ *       Projection [196/253] done.      *
+ *       Projection [197/253] done.      *
+ *       Projection [198/253] done.      *
+ *       Projection [199/253] done.      *
+ *       Projection [200/253] done.      *
+ *       Projection [201/253] done.      *
+ *       Projection [202/253] done.      *
+ *       Projection [203/253] done.      *
+ *       Projection [204/253] done.      *
+ *       Projection [205/253] done.      *
+ *       Projection [206/253] done.      *
+ *       Projection [207/253] done.      *
+ *       Projection [208/253] done.      *
+ *       Projection [209/253] done.      *
+ *       Projection [210/253] done.      *
+ *       Projection [211/253] done.      *
+ *       Projection [212/253] done.      *
+ *       Projection [213/253] done.      *
+ *       Projection [214/253] done.      *
+ *       Projection [215/253] done.      *
+ *       Projection [216/253] done.      *
+ *       Projection [217/253] done.      *
+ *       Projection [218/253] done.      *
+ *       Projection [219/253] done.      *
+ *       Projection [220/253] done.      *
+ *       Projection [221/253] done.      *
+ *       Projection [222/253] done.      *
+ *       Projection [223/253] done.      *
+ *       Projection [224/253] done.      *
+ *       Projection [225/253] done.      *
+ *       Projection [226/253] done.      *
+ *       Projection [227/253] done.      *
+ *       Projection [228/253] done.      *
+ *       Projection [229/253] done.      *
+ *       Projection [230/253] done.      *
+ *       Projection [231/253] done.      *
+ *       Projection [232/253] done.      *
+ *       Projection [233/253] done.      *
+ *       Projection [234/253] done.      *
+ *       Projection [235/253] done.      *
+ *       Projection [236/253] done.      *
+ *       Projection [237/253] done.      *
+ *       Projection [238/253] done.      *
+ *       Projection [239/253] done.      *
+ *       Projection [240/253] done.      *
+ *       Projection [241/253] done.      *
+ *       Projection [242/253] done.      *
+ *       Projection [243/253] done.      *
+ *       Projection [244/253] done.      *
+ *       Projection [245/253] done.      *
+ *       Projection [246/253] done.      *
+ *       Projection [247/253] done.      *
+ *       Projection [248/253] done.      *
+ *       Projection [249/253] done.      *
+ *       Projection [250/253] done.      *
+ *       Projection [251/253] done.      *
+ *       Projection [252/253] done.      *
+ *       Projection [253/253] done.      *
+ *            AMN calculated.            *
+ *            EIG written.               *
+ *---------------------------------------*
+   1 F= -.49078540E+03 E0= -.49081698E+03  d E =0.947186E-01  mag=    -0.0000
+
+
+####################################
+VASP.5.4.4.pl2 calculation finalized...
+     Year: 2025
+    Month: 06
+      Day: 11
+     Time: 12:01:41 AM

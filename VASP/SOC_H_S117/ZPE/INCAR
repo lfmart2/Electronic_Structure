@@ -1,0 +1,42 @@
+###############################################################################
+#  NbP slab (+H) – ZPE via finite-difference Hessian *with* SOC              #
+#  (rigid surface: only adsorbate coordinates displaced)                      #
+###############################################################################
+# --- restart from converged SOC run -----------------------------------------
+ISTART   = 1               # use existing WAVECAR
+ICHARG   = 1               # read CHGCAR and update density
+
+# --- electronic structure: identical to production SCF ----------------------
+ENCUT    = 400
+ISYM     = 0
+LSORBIT  = .TRUE.
+LNONCOLLINEAR = .TRUE.
+SAXIS    = 0 0 1
+LMAXMIX  = 4
+LREAL    = Auto         # .FALSE. better force accuracy than Auto
+PREC     = Accurate
+ADDGRID  = .TRUE.
+LPLANE   = .TRUE.
+LASPH    = .TRUE.
+
+# --- occupational smearing (forces need a smooth Fermi surface) ------------
+ISMEAR   = 0
+SIGMA    = 0.05
+
+# --- SCF loop ---------------------------------------------------------------
+ALGO     = Normal
+NELM     = 150
+EDIFF    = 1E-8            # tighten for reliable forces
+
+# --- finite-difference vibrational setup ------------------------------------
+IBRION   = 5               # central finite differences
+NFREE    = 2               # +Δ and –Δ
+POTIM    = 0.015           # displacement Δ (Å)
+NSW      = 1               # single-point forces only
+ISIF     = 2               # fixed cell; write stress for sanity check
+
+# --- output -----------------------------------------------------------------
+LWAVE    = .FALSE.
+LCHARG   = .FALSE.
+LORBIT   = 0
+NWRITE   = 0

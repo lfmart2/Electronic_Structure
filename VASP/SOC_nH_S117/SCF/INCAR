@@ -1,0 +1,39 @@
+# General Settings
+System    = NbP Weyl Semimetal with SOC  # Description of the system  
+ISYM      =  0           # Disable symmetry (required for SOC calculations)  
+LREAL     = .FALSE.      # Avoid real-space projection approximations  
+PREC      = Accurate     # Use high precision calculations  
+NCORE     = 7            # Number of cores used in parallelization  
+ADDGRID   = .TRUE.       # Improves numerical accuracy for forces and energy.  
+LPLANE    = .TRUE.       # Optimizes parallelization for large supercells.  
+NBANDS    = 728          # Total number of bands needed for WANNIER90
+ISTART    = 1            # ignore WAVECAR
+ICHARG    = 0            # read CHGCAR from the relaxation run
+
+# Spin-Orbit Coupling (SOC) and Noncollinear Magnetism
+LSORBIT   = .TRUE.      # Enable spin-orbit coupling (SOC)  
+ISPIN     = 2           # Enable spin polarization  
+LNONCOLLINEAR = .TRUE.  # Activate noncollinear magnetism  
+SAXIS     = 0 0 1       # Set spin quantization axis (adjust if needed)  
+LMAXMIX   = 4           # Maximum l-value for the on-site PAW potential  
+
+# Electronic Convergence Parameters
+ENCUT     = 400         # Plane-wave energy cutoff (in eV)  
+EDIFF     = 1E-7        # Tighter convergence criterion for accurate SCF  
+NELM      = 150         # More SCF iterations to ensure full convergence  
+NELMIN    = 10          # Minimum number of SCF steps  
+ALGO      = Normal      # More stable electronic minimization algorithm  
+GGA_COMPAT = .FALSE.    # Use standard PBE functional without spherical cutoff  
+VOSKOWN   = 0           # Enhances magnetic moments and total energy corrections  
+LORBIT    = 11          # Enables projection onto atomic orbitals  
+AMIX     = 0.2
+BMIX     = 0.0001
+
+# Output Control
+LWAVE     = .TRUE.      # Save WAVECAR for future hybrid or continuation calculations  
+LCHARG    = .TRUE.      # Do not save CHGCAR for post-processing (e.g., DOS, Bader analysis)
+
+# LDIPOL    = .TRUE.
+# IDIPOL    = 3
+# DIPOL     = 0 0 40
+LAMBDA    = .TRUE.       # if MAGMOM = 0 0 0 ... (non‑magnetic) 

@@ -1,0 +1,42 @@
+# General Settings
+System    = NbP Weyl Semimetal with SOC  # Description of the system  
+ISYM      = -1           # Disable symmetry (required for SOC calculations)  
+LREAL     = Auto         # Avoid real-space projection approximations  
+PREC      = Accurate     # Use high precision calculations  
+#NCORE     = 7            # Number of cores used in parallelization  
+ADDGRID   = .TRUE.       # Improves numerical accuracy for forces and energy.
+LPLANE    = .TRUE.       # Optimizes parallelization for large supercells.
+
+# Spin-Orbit Coupling (SOC) and Noncollinear Magnetism
+LSORBIT   = .TRUE.      # Enable spin-orbit coupling (SOC)  
+ISPIN     = 2           # Enable spin polarization  
+LNONCOLLINEAR = .TRUE.  # Activate noncollinear magnetism  
+SAXIS     = 0 0 1       # Set spin quantization axis (adjust if needed)  
+LMAXMIX   = 4           # Maximum l-value for the on-site PAW potential  
+
+# Electronic Relaxation Parameters
+ENCUT     = 300         # Plane-wave energy cutoff (in eV)  
+EDIFF     = 5E-6        # Convergence criterion for electronic self-consistency  
+NELM      = 120         # Maximum number of electronic SCF iterations  
+NELMIN    = 10          # Minimum number of electronic SCF steps  
+ALGO      = Fast        # Use an efficient electronic minimization algorithm  
+GGA_COMPAT = .FALSE.    # Use standard PBE functional without spherical cutoff  
+VOSKOWN   = 0           # Enhances magnetic moments and total energy corrections  
+LORBIT    = 11          # Enables projection onto atomic orbitals
+
+# Ionic Relaxation Parameters
+IBRION    = 2           # Uses the conjugate gradient (CG) algorithm  
+ISIF      = 1           # Relax ions, but keep cell shape and volume fixed  
+NSW       = 200         # Maximum number of ionic steps (ignored if IBRION=-1)
+POTIM     = 0.3         # Reduces ionic movement step size to improve relaxation stability
+EDIFFG    = -0.02       # Convergence criterion for ionic relaxation 
+
+# Output Control
+LWAVE     = .FALSE.     # Do not write the WAVECAR file  
+LCHARG    = .TRUE.      # Do not write the CHGCAR file  
+
+GGA        = PE
+# LDIPOL     = .TRUE.
+# IDIPOL     = 3
+# DIPOL      = 0 0 40     # set z0 to vacuum centre
+LAMBDA     = .TRUE.     # if leaving MAGMOM at 0

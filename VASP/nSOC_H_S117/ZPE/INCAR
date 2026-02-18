@@ -1,0 +1,54 @@
+###############################################################################
+#  NbP slab (+H) – ZPE via finite-difference Hessian *without* SOC            #
+#  (rigid surface: only adsorbate coordinates displaced)                      #
+###############################################################################
+# --- restart from converged SOC run -----------------------------------------
+ISTART   = 1               # use existing WAVECAR
+ICHARG   = 1               # read CHGCAR and update density
+
+# --- electronic structure: identical to production SCF ----------------------
+ENCUT    = 400
+ISYM     = 0
+LSORBIT       = .FALSE.
+LNONCOLLINEAR = .FALSE.
+SAXIS    = 0 0 1
+LMAXMIX  = 4
+LREAL    = Auto         # .FALSE. better force accuracy than Auto
+PREC     = Accurate
+ADDGRID  = .TRUE.
+LPLANE   = .TRUE.
+LASPH    = .TRUE.
+
+# ---- spin channel & initial moments ----------------------------------------
+ISPIN      = 2              # spin-polarised (collinear)
+# Example: 1 H, 28 Nb, 28 P →  adjust counts to match your POSCAR
+MAGMOM     = 1*0.0  28*0.6  28*0.0
+# └─ use the colon syntax if you prefer (VASP ≥5.4.4):
+# MAGMOM   = H:0.0  Nb:0.6  P:0.0
+# ---------------------------------------------------------------------------
+
+# --- occupational smearing (forces need a smooth Fermi surface) ------------
+ISMEAR   = 1
+SIGMA    = 0.2
+
+# --- SCF loop ---------------------------------------------------------------
+ALGO     = Normal
+NELM     = 150
+EDIFF    = 1E-8            # tighten for reliable forces
+AMIX     = 0.20
+BMIX     = 0.00010
+AMIN     = 0.010
+NELM     = 200
+
+# --- finite-difference vibrational setup ------------------------------------
+IBRION   = 5               # central finite differences
+NFREE    = 2               # +Δ and –Δ
+POTIM    = 0.015           # displacement Δ (Å)
+NSW      = 1               # single-point forces only
+ISIF     = 2               # fixed cell; write stress for sanity check
+
+# --- output -----------------------------------------------------------------
+LWAVE    = .FALSE.
+LCHARG   = .FALSE.
+LORBIT   = 0
+NWRITE   = 0

@@ -1,21 +1,11 @@
-# VASP Workflows
-
-This folder contains VASP-oriented examples for topological materials, with emphasis on supercell/slab-like configurations useful for surface-state analysis.
-
-## Focus areas
-
-- Surface/supercell electronic-structure calculations
-- Band structure analysis
-- Density of States (DOS)
-- Fermi-surface / spectral-function style studies
-
-## Suggested organization for future additions
-
-For each new material, consider grouping files as:
-
-- `input/` (`INCAR`, `KPOINTS`, `POSCAR`, `POTCAR` notes)
-- `runs/` (SCF, NSCF, bands)
-- `postprocessing/` (DOS/band plotting data)
-- `figures/` (final publication/interview visuals)
-
-This structure makes your work easier to review during interviews and collaborations.
+# VASP Input Files
+Here, I included all the input files to run VASP for:
+Relaxation -> SCF -> Bandstructure/DOS/FermiSurface
+Relaxation -> SCF -> NSCF -> Wannierization (W90) -> TB model
+for the following configurations:
+- Collinear Spin, non Spin Orbit Coupling (SOC), for Supercell 1 x 1 x 7 without adsorbed Hydrogen atom
+- Collinear Spin (non-SOC) for **High Coverage** (Supercell 1 x 1 x 7) with adsorbed Hydrogen atom
+- non Collinear Spin (SOC) for  the Supercell 1 x 1 x 7 without adsorbed Hydrogen atom
+- non Collinear Spin (SOC) for **High Coverage** (Supercell 1 x 1 x 7) with adsorbed Hydrogen atom
+- non Collinear Spin (SOC) for the Supercell 2 x 1 x 7 without adsorbed Hydrogen atom
+- non Collinear Spin (SOC) for **Low Coverage** (Supercell w x 1 x 7) with adsorbed Hydrogen atom

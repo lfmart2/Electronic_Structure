@@ -1,0 +1,142 @@
+Input files copied to scratch directory:
+gpu1
+####################################
+The directory is
+/scratch/49333
+####################################
+####################################
+############ INCAR FILE ############
+####################################
+###############################################################################
+#                   NbP slab: NSCF VASP -> Wannier90                          #
+###############################################################################
+System    = NbP Weyl Semimetal with SOC  # Description of the system
+# --- Restart flags -----------------------------------------------------------
+ISTART    = 1            # read WAVECAR  (wave-functions)
+ICHARG    = 11           # read CHGCAR   (charge density)
+
+# --- Symmetry & basis --------------------------------------------------------
+ISYM      = 0            # keep only time-reversal; no k-point folding
+ENCUT     = 400          # Same as in structure optimization
+LMAXMIX   = 4            # Maximum l-value for the on-site PAW potential 
+LREAL     = Auto         # Avoid real-space projection approximations
+PREC      = Accurate     # High precision
+ADDGRID   = .TRUE.       # Improves numerical accuracy for forces and energy.  
+LPLANE    = .TRUE.       # Optimizes parallelization for large supercells.
+LAMBDA    = .TRUE.       # if MAGMOM = 0 0 0 ... (non‑magnetic)
+NSIM      = 8
+# ---- spin channel & initial moments ----------------------------------------
+ISPIN      = 2              # spin-polarised (collinear)
+# Example: 1 H, 28 Nb, 28 P →  adjust counts to match your POSCAR
+MAGMOM     = 1*0.0  28*0.6  28*0.0
+# └─ use the colon syntax if you prefer (VASP ≥5.4.4):
+# MAGMOM   = H:0.0  Nb:0.6  P:0.0
+# ---------------------------------------------------------------------------
+
+# --- Electronic loop (one step is enough) ------------------------------------
+# NELM      = 1            # only update occupancies
+ALGO       = Normal       # More stable electronic minimization algorithm  
+EDIFF      = 1E-8         # Tight electronic convergence
+AMIX       = 0.20
+BMIX       = 0.00010
+AMIN       = 0.010
+NELMDL     = 20             # freeze charge first 20 steps
+NELM       = 200
+
+# ---- metallic smearing ------------------------------------------------------
+ISMEAR     = 1              # Methfessel-Paxton; −1 for Gaussian
+SIGMA      = 0.20           # 0.15–0.25 eV works well for NbP slabs
+
+# --- Output ------------------------------------------------------------------
+LWAVE     = .FALSE.      # no need to write another huge file
+LCHARG    = .FALSE.
+LORBIT    = 11           # writes PROCAR for orbital-resolved bands
+NWRITE    = 2
+
+# --- Ionic Relaxation --------------------------------------------------------
+NSW      = 0
+IBRION   = -1
+####################################
+############ END INCAR #############
+####################################
+
+
+
+Starting VASP.5.4.4.pl2 calculation...
+     Year: 2025
+    Month: 06
+      Day: 10
+     Time: 02:23:23 PM
+Using device 0 (rank 0, local rank 0, local size 1) : Tesla V100-PCIE-16GB
+ running on    1 total cores
+ distrk:  each k-point on    1 cores,    1 groups
+ distr:  one band on    1 cores,    1 groups
+ using from now: INCAR     
+  
+ *******************************************************************************
+  You are running the GPU port of VASP! When publishing results obtained with
+  this version, please cite:
+   - M. Hacene et al., http://dx.doi.org/10.1002/jcc.23096
+   - M. Hutchinson and M. Widom, http://dx.doi.org/10.1016/j.cpc.2012.02.017
+  
+  in addition to the usual required citations (see manual).
+  
+  GPU developers: A. Anciaux-Sedrakian, C. Angerer, and M. Hutchinson.
+ *******************************************************************************
+  
+ vasp.5.4.4.18Apr17-6-g9f103f2a35 (build Jun 06 2025 08:41:24) complex          
+  
+ POSCAR found type information on POSCAR  H  Nb P 
+ POSCAR found :  3 types and      57 ions
+ Error reading item 'LAMBDA' from file INCAR.
+ LDA part: xc-table for Pade appr. of Perdew
+  
+ WARNING: The GPU port of VASP has been extensively
+ tested for: ALGO=Normal, Fast, and VeryFast.
+ Other algorithms may produce incorrect results or
+ yield suboptimal performance. Handle with care!
+  
+ found WAVECAR, reading the header
+  number of k-points has changed, file:    32 present:   150
+  trying to continue reading WAVECAR, but it might fail
+ WARNING: stress and forces are not correct
+ POSCAR, INCAR and KPOINTS ok, starting setup
+creating 32 CUDA streams...
+creating 32 CUFFT plans with grid size 600 x 24 x 24...
+ FFT: planning ...
+ reading WAVECAR
+ the WAVECAR file was read successfully
+ charge-density read from file: unknown                                 
+ magnetization density read from file 1
+ entering main loop
+       N       E                     dE             d eps       ncg     rms          rms(c)
+DAV:   1    -0.161295195268E+03   -0.16130E+03   -0.11472E+04285999   0.306E+02
+DAV:   2    -0.458520613252E+03   -0.29723E+03   -0.28589E+03247387   0.104E+02
+DAV:   3    -0.473723802416E+03   -0.15203E+02   -0.14734E+02270834   0.327E+01
+DAV:   4    -0.474359124147E+03   -0.63532E+00   -0.60914E+00278704   0.602E+00
+DAV:   5    -0.474404599336E+03   -0.45475E-01   -0.44306E-01275344   0.128E+00
+DAV:   6    -0.474409394604E+03   -0.47953E-02   -0.47070E-02282544   0.266E-01
+DAV:   7    -0.474409937546E+03   -0.54294E-03   -0.53483E-03275456   0.780E-02
+DAV:   8    -0.474410007074E+03   -0.69528E-04   -0.68723E-04282448   0.167E-02
+DAV:   9    -0.474410015952E+03   -0.88773E-05   -0.88074E-05231792   0.598E-03
+DAV:  10    -0.474410017129E+03   -0.11779E-05   -0.11719E-05173968   0.142E-03
+DAV:  11    -0.474410017285E+03   -0.15572E-06   -0.15576E-06145360   0.693E-04
+DAV:  12    -0.474410017307E+03   -0.22155E-07   -0.21058E-07141712   0.257E-04
+DAV:  13    -0.474410017310E+03   -0.24011E-08   -0.28869E-08137760   0.162E-04
+DAV:  14    -0.474410017310E+03   -0.37835E-09   -0.41423E-09134752   0.939E-05
+DAV:  15    -0.474410017310E+03   -0.94587E-10   -0.70484E-10131920   0.723E-05
+DAV:  16    -0.474410017310E+03    0.26193E-09   -0.23134E-10130128   0.533E-05
+DAV:  17    -0.474410017311E+03   -0.86584E-09   -0.15243E-10129744   0.454E-05
+DAV:  18    -0.474410017310E+03    0.34925E-09   -0.10662E-10128240   0.354E-05
+DAV:  19    -0.474410017310E+03    0.66939E-09   -0.75429E-11126096   0.308E-05
+DAV:  20    -0.474410017310E+03   -0.87311E-10   -0.55497E-11121472   0.243E-05
+DAV:  21    -0.474410017310E+03   -0.58208E-09   -0.39686E-11120048   0.215E-05
+   1 F= -.47441002E+03 E0= -.47439201E+03  d E =-.540167E-01  mag=    -0.0000
+
+
+####################################
+VASP.5.4.4.pl2 calculation finalized...
+     Year: 2025
+    Month: 06
+      Day: 10
+     Time: 03:42:43 PM

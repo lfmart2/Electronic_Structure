@@ -1,0 +1,58 @@
+###############################################################################
+#                 NbP slab – SOC: NSCF VASP -> Wannier90                      #
+###############################################################################
+System    = NbP Weyl Semimetal with SOC  # Description of the system
+# --- Restart flags -----------------------------------------------------------
+ISTART    = 1            # read WAVECAR  (wave-functions)
+ICHARG    = 11           # read CHGCAR   (charge density)
+
+# --- Symmetry & basis --------------------------------------------------------
+ISYM      = 0            # keep only time-reversal; no k-point folding
+ENCUT     = 400          # Same as in structure optimization
+NBANDS    = 730          # ≥ SCF value (same is safest)
+LSORBIT   = .TRUE.       # Enable spin-orbit coupling (SOC) 
+LNONCOLLINEAR = .TRUE.   # Activate noncollinear magnetism  
+SAXIS     = 0 0 1        # Set spin quantization axis (adjust if needed) 
+LMAXMIX   = 4            # Maximum l-value for the on-site PAW potential 
+LREAL     = .FALSE.      # Avoid real-space projection approximations
+PREC      = Accurate     # High precision
+ADDGRID   = .TRUE.       # Improves numerical accuracy for forces and energy.  
+LPLANE    = .TRUE.       # Optimizes parallelization for large supercells.
+LAMBDA    = .TRUE.       # if MAGMOM = 0 0 0 ... (non‑magnetic)
+
+# --- Electronic loop (one step is enough) ------------------------------------
+# NELM      = 1            # only update occupancies
+ALGO      = Normal       # More stable electronic minimization algorithm  
+EDIFF     = 1E-8         # Tight electronic convergence
+
+# --- Dipole correction (keep identical to SCF) -------------------------------
+# LDIPOL    = .TRUE.
+# IDIPOL    = 3
+# DIPOL     = 0 0 40       # same z0 you chose for SCF
+
+# --- Output ------------------------------------------------------------------
+LWAVE     = .FALSE.      # no need to write another huge file
+LCHARG    = .FALSE.
+LORBIT    = 11           # writes PROCAR for orbital-resolved bands
+NWRITE    = 2
+
+# --- Ionic Relaxation --------------------------------------------------------
+NSW      = 0
+IBRION   = -1
+
+# --- Output Control ----------------------------------------------------------
+LWAVE    = .FALSE. 
+LCHARG   = .FALSE.
+LORBIT   = 0
+
+# --- Electric Field parameters for Parallel calculation ----------------------
+LWANNIER90  = .TRUE.
+LWRITE_UNK  = .FALSE.
+LCALC_AMN   = .TRUE.
+LWRITE_AMN  = .TRUE.   
+LCALC_MMN   = .TRUE.
+LWRITE_MMN  = .TRUE.
+LWRITE_SPN  = .FALSE.
+LSPN_FMTED  = .FALSE.
+LWRITE_EIG  = .TRUE.
+NUM_WANN    = 506
