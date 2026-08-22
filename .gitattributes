@@ -1,0 +1,22 @@
+# Language stats should describe the code, not the simulation output.
+# VASP and Quantum ESPRESSO inputs/outputs are data, not source.
+
+*.ps            linguist-detectable=false
+*.eps           linguist-detectable=false
+*.dat           linguist-detectable=false
+*.out           linguist-detectable=false
+*.log           linguist-detectable=false
+*.xml           linguist-detectable=false
+OUTCAR*         linguist-detectable=false
+OSZICAR*        linguist-detectable=false
+DOSCAR*         linguist-detectable=false
+EIGENVAL*       linguist-detectable=false
+vasprun*        linguist-detectable=false
+
+# Treat the plain-text input decks as configuration so they render sensibly.
+INCAR*          linguist-language=INI
+KPOINTS*        linguist-language=INI
+POSCAR*         linguist-language=INI
+CONTCAR*        linguist-language=INI
+*.win           linguist-language=INI
+*.in            linguist-language=INI
