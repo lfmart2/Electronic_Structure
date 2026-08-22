@@ -20,3 +20,9 @@ POSCAR*         linguist-language=INI
 CONTCAR*        linguist-language=INI
 *.win           linguist-language=INI
 *.in            linguist-language=INI
+
+# Plotting scripts are output tooling, not the point of this repository.
+*.gnu           linguist-detectable=false
+*.gp            linguist-detectable=false
+*.plt           linguist-detectable=false
+*.gnuplot       linguist-detectable=false
